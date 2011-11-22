@@ -1,0 +1,10 @@
+{% extends "admin_base.html" %}
+{% block content_heading %}{{ student.name }}'s hours for {{ semester.name }}{% endblock %}</h2>
+{% block content %}
+<table>
+    <tr><th>Date</th><th>hours</th></tr>
+    {% for entry in entries %}
+    <tr><td>{{ entry.event_date }}</td><td>{{ entry.hours }}</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

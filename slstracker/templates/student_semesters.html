@@ -1,0 +1,13 @@
+{% extends "admin_base.html" %}
+{% block content_heading %}{{ student.name }}{% endblock %}</h2>
+{% block content %}
+<table>
+    <tr><th>Semester</th><th>Active?</th></tr>
+    {% for semester in semesters %}
+    <tr>
+        <td><a href="/students/{{ student.id }}/semesters/{{ semester.id }}">{{ semester.name }}</a></td>
+        <td>{{ semester.active }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

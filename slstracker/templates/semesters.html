@@ -1,0 +1,14 @@
+{% extends "admin_base.html" %}
+{% block content_heading %}All Semesters{% endblock %}</h2>
+{% block content %}
+<table>
+    <tr><th></th><th>active</th><th></th></tr>
+    {% for s in semesters %}
+    <tr class="{{ loop.cycle("alt", "") }}">
+        <td><a href="/semesters/{{ s.id }}">{{ s.name }}</a></td>
+        <td>{{ s.active }}</td>
+        <td><a href="/semesters/{{ s.id }}?_method=DELETE">delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

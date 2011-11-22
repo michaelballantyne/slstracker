@@ -1,0 +1,14 @@
+{% extends "admin_base.html" %}
+{% block content_heading %}{{ semester.name }}{% endblock %}</h2>
+{% block content %}
+<table>
+<tr><th>Username</th><th>Name</th></tr>
+{% for s in students %}
+<tr><td><a href="/semesters/{{ semester.id }}/students/{{ s.id}}">{{ s.username }}</a></td><td>{{ s.name }}</tr>
+{% endfor %}
+</table>
+
+{% if students|length < 1 %}
+no students
+{% endif %}
+{% endblock %}
