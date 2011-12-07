@@ -43,5 +43,6 @@ create table hours_entry (
     event_date date not null,
     hours int not null,
     organization int not null references organization(id),
-    foreign key (student, semester) references student_semester(student, semester)
+    foreign key (student, semester) references student_semester(student, semester),
+    activity text not null
 );

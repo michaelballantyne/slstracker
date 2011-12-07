@@ -3,32 +3,37 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <title>Title</title>
+        <title>Service Learning Scholars Tracker</title>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
         <link rel="stylesheet" type="text/css" href="/static/style.css" />
     </head>
 
     <body>
-        <div id="header">
-            <div id="user">
-                <p>Signed in as mjb0321 / Michael Ballantyne<br/>
-                <a href="/logout">Sign out</a></p>
+        <div id="header-wrap">
+            <div id="header">
+                <div id="user">
+                    <p>Signed in as {{ session.username }} / {{ session.name }}<br/>
+                    <a href="/logout">Sign out</a></p>
+                </div>
+                <img src="/static/logo-70h.jpg"/ id="logo">
+                <h1>Service Learning Scholars</h1>
+                <div id="{% block tab %}tab1{% endblock %}"> 
+                    <ul id="tabnav">
+                        <li class="tab1"><a href="/semesters/">Semesters</a></li>
+                        {% if session.admin %}
+                        <li class="tab2"><a href="/students/">Students</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
-            <img src="/static/logo.jpg"/ id="logo">
-            <h1>Service Learning Scholars</h1>
-            <div id="tab1"> 
-                <ul id="tabnav">
-                    <li class="tab1"><a href="/semesters/">Semesters</a></li>
-                    <li class="tab2"><a href="/students/">Students</a></li>
-                </ul>
-            </div>
-            <div id="bread">
-                <ul>
-                    <li class="first">Home</li>
-                    <li>Semesters</li>
-                </ul>
-            </div>
+        </div>
+        <div id="bread">
+            <ul>
+                <li class="first">Location</li>
+                {% block bread %}
+                {% endblock %}
+            </ul>
         </div>
         <div id="content-outer">
             <h2>{% block content_heading %}Content Header{% endblock %}</h2>

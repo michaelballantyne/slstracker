@@ -59,5 +59,21 @@ class Model:
         return select([self.hours_entry], 
                 and_(self.hours_entry.c.student == student_id, 
                      self.hours_entry.c.semester == semester_id))
+                
+    def getTotalHoursForStudent(self, student_id, semester_id):
+        total = 0
 
+        query = select([self.hours_entry])
+        if student_id is not None:
+            query = query.where(self.hours_entry.c.student == student_id)
+
+        if semester_id is not None:
+            query = query.where(self.hours_entry.c.semester == semester_id)
+
+        hours_entries = self.engine.execute(query)
+
+        for entry in hours_entries:
+            total += entry.hours
+
+        return total
 

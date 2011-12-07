@@ -15,7 +15,7 @@ class App(Flask):
             raise
 
 app = App(__name__)
-
+app.secret_key="dfjasld1r9sdj5w0gsldjd6rezg0fx"
 engine = create_engine('postgresql+psycopg2://slstracker:cce@localhost:5432/slstracker', echo=True, strategy='threadlocal', convert_unicode=True)
 
 meta = MetaData()

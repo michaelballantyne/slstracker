@@ -1,13 +1,23 @@
 {% extends "admin_base.html" %}
+{% block tab %}tab2{% endblock %}
+{% block bread %}
+<li><a href="/students/">Students</a></li>
+<li>{{ student.name }}</li>
+{% endblock %}
 {% block content_heading %}{{ student.name }}{% endblock %}</h2>
 {% block content %}
+<div class="content-inner">
 <table>
-    <tr><th>Semester</th><th>Active?</th></tr>
+    <tr><th>Semester</th><th>Active?</th><th>Hours</th></tr>
     {% for semester in semesters %}
     <tr>
         <td><a href="/students/{{ student.id }}/semesters/{{ semester.id }}">{{ semester.name }}</a></td>
         <td>{{ semester.active }}</td>
+        <td>{{ semester.hours }}</td>
     </tr>
     {% endfor %}
 </table>
+</div>
+<br />
+Total Hours: {{ hours }}
 {% endblock %}

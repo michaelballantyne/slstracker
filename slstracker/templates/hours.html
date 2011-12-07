@@ -1,10 +1,16 @@
 {% extends "admin_base.html" %}
+{% block tab %}tab2{% endblock %}
+{% block bread %}
+<li><a href="/students/">Students</a></li>
+<li><a href="/students/{{ student.id }}">{{ student.name }}</a></li>
+<li>{{ semester.name }}</li>
+{% endblock %}
 {% block content_heading %}{{ student.name }}'s hours for {{ semester.name }}{% endblock %}</h2>
 {% block content %}
 <table>
-    <tr><th>Date</th><th>hours</th></tr>
+    <tr><th>Date</th><th>Hours</th><th>Activity</th</tr>
     {% for entry in entries %}
-    <tr><td>{{ entry.event_date }}</td><td>{{ entry.hours }}</td></tr>
+    <tr><td>{{ entry.event_date }}</td><td>{{ entry.hours }}</td><td>{{ entry.activity }}</td></tr>
     {% endfor %}
 </table>
 {% endblock %}

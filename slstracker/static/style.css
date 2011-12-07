@@ -1,108 +1,24 @@
 body {
     padding: 0px;
-    margin: 0px;
-    font-family: "Trebuchet MS";
-    background-color: #E3E3E3;    
+    margin:0;
+    font-family: "Trebuchet MS", verdana, arial, sans-serif;
+    background-color: #E3E3E3;
+}
+
+#header > h1 { 
+    display: inline; 
 }
 
 #header {
     background-color: white;
-}
-
-ul#tabnav {
-    text-align: left;
-    margin: 1em 0 0em 0;
-    font: bold 15px verdana, arial, sans-serif;
-    border-bottom: 2px solid #481A61;
-    list-style-type: none;
-    padding: 3px 10px 3px 10px;
-}
-
-ul#tabnav li {
-    display: inline;
-}
-
-div#tab1 li.tab1, div#tab2 li.tab2 {
-    border-bottom: 1px solid #596185;
-}
-
-div#tab1 li.tab1 a, div#tab2 li.tab2 a{
-    background-color: #596185;
-    color: white;
-    position: relative;
-    top: 2px;
-}
-
-ul#tabnav li a {
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    padding: 3px 4px;
-    border: 2px solid #481A61; 
-    background-color: #5D6485;
-    color: #E6E6E6;
-    margin-right: 0px;
-    text-decoration: none;
-    border-bottom: none;
-}
-
-ul#tabnav a:hover {
-    background: #fff;
-}
-
-
-.content-inner {
-    border-radius: 8px;
-    border: 2px solid #481A61;
-    padding: 1em;
-    background-color: white;
-}
-
-#content-outer {
-    padding-top: 1em;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 45em;
-}
-
-#content-outer > h2 {
-    margin-left: 1em;
-    margin-bottom: 0;
-}
-
-table {
-    width: 100%;
-    height: 100%;
-    border-style: hidden;
-    border-width: 2px;
-    border-color: #481A61;
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
-td,th {
-    padding: 7px;
-    padding-left: 11px;
-    padding-right: 11px;
-    border-left: 1px dashed;
-    border-right: 1px dashed;
-    border-bottom: 1px solid;
-    border-top: 1px solid;
-}
-
-th {
-    border-bottom: 2px solid;
-}
-
-tr.alt {
-    background-color: #E0DCE8;
+    padding-top:1em;
 }
 
 #logo {
-    float: left;
-    height: 70px;
+    float:left;
+    height:70px;
     margin-right: 9px;
 }
-
 #user {
     float: right;
     margin-right: 1em;
@@ -110,6 +26,45 @@ tr.alt {
     position: relative;
     top: -1.3em;
 }
+
+ul#tabnav {
+    font: bold 15px verdana, arial, sans-serif;
+    list-style-type: none;
+    margin: 1em 0 0 0;
+    padding: 3px 10px 3px 10px;
+}
+
+div#tab1, div#tab2 {
+    margin-left: 6em;
+    padding-top: .2em;
+}
+
+ul#tabnav li { 
+    display: inline; 
+}
+
+div#tab1 li.tab1, div#tab2 li.tab2 { 
+    border-bottom: 1px solid #596185; 
+}
+
+div#tab1 li.tab1 a, div#tab2 li.tab2 a {
+    background-color: #596185;
+    color: white;
+}
+
+ul#tabnav li a {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding: 3px 4px;
+    border: 2px solid #481A61;
+    background-color: #8F95B3;
+    color: #E6E6E6;
+    margin-right: 0px;
+    text-decoration: none;
+    border-bottom: none;
+}
+
+ul#tabnav a:hover { background: #717585; }
 
 #bread {
     color: #ccc;
@@ -123,7 +78,7 @@ tr.alt {
     padding-left: 0;
     display: inline;
     border: none;
-} 
+}
 
 #bread ul li {
     padding-left: 2px;
@@ -133,15 +88,56 @@ tr.alt {
     color: white;
 }
 
-#bread a:link, #bread a:visited {
+#bread a:link,
+
+#bread a:visited {
     color: #FBCB62;
     text-decoration: none;
 }
 
-#bread ul li:before {
-    content: "\0020 \0020 \0020 \00BB \0020";
+#bread ul li:before { content: "\0020 \0020 \0020 \00BB \0020"; }
+
+#bread ul li.first:before { content: ""; }
+
+#content-outer {
+    padding-top: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 45em;
 }
 
-#bread ul li.first:before {
-    content: "";
+#content-outer > h2 {
+    margin-left: 1em;
+    margin-bottom: .2em;
 }
+
+.content-inner {
+    border-radius: 8px;
+    border: 2px solid #481A61;
+    padding: 1em;
+    background-color: white;
+}
+
+table {
+    width: 100%;
+    height: 100%;
+    border-style: hidden;
+    border-width: 2px;
+    border-color: #481A61;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td, th {
+    padding: 7px;
+    padding-left: 11px;
+    padding-right: 11px;
+    border-left: 1px dashed;
+    border-right: 1px dashed;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+}
+
+th { border-bottom: 2px solid; }
+
+tr.alt { background-color: #E0DCE8; }
