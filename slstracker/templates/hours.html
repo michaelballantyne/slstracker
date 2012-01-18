@@ -10,7 +10,11 @@
 <table>
     <tr><th>Date</th><th>Hours</th><th>Activity</th</tr>
     {% for entry in entries %}
-    <tr><td>{{ entry.event_date }}</td><td>{{ entry.hours }}</td><td>{{ entry.activity }}</td></tr>
+    <tr class="{{ loop.cycle("alt", "") }}"><td>{{ entry.event_date }}</td><td>{{ entry.hours }}</td><td>{{ entry.activity }}</td></tr>
+        {% else %}
+        <tr class="alt"><td colspan="3">No hours entered yet.</td></tr>
     {% endfor %}
 </table>
+<br />
+Total hours for semester: {{ hours }}
 {% endblock %}

@@ -6,13 +6,15 @@
 {% block content_heading %}All Students{% endblock %}</h2>
 {% block content %}
 <table>
-    <tr><th>Name</th><th>Hours</th></tr>
+    <tr><th>Student</th><th>Total Hours</th></tr>
 {% for s in students %}
-<tr><td><a href="/students/{{ s.id }}">{{ s.name }}</a></td><td>{{ s.hours }}</td></tr>
+<tr class="{{ loop.cycle("alt", "") }}">
+    <td><a href="/students/{{ s.id }}">{{ s.name }}</a></td>
+    <td>{{ s.hours }}</td>
+</tr>
+        {% else %}
+        <tr class="alt"><td colspan="2">No students yet.</td></tr>
 {% endfor %}
 </table>
 
-{% if students|length < 1 %}
-no students
-{% endif %}
 {% endblock %}

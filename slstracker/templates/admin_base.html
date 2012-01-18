@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+{% macro yn(boolean) %}{% if boolean %}yes{% else %}no{% endif %}{% endmacro %}
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
@@ -38,6 +39,11 @@
         <div id="content-outer">
             <h2>{% block content_heading %}Content Header{% endblock %}</h2>
             <div class="content-inner">
+                <div id="flash">
+                    {% for msg in get_flashed_messages() %}
+                    <p>{{ msg }}</p>
+                    {% endfor %}
+                </div>
                 {% block content %}{% endblock %}
             </div>
         </div>

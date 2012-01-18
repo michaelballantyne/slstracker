@@ -5,23 +5,25 @@
 {% endblock %}
 {% block content_heading %}{{ semester.name }}{% endblock %}</h2>
 {% block content %}
-<div class="content-inner">
     <table>
-        <tr><th>Username</th><th>Name</th><th>Hours</th></tr>
+        <tr><th>Student</th><th>Hours this Semester</th></tr>
         {% for s in students %}
-        <tr>
-            <td><a href="/semesters/{{ semester.id }}/students/{{ s.id}}">{{ s.username }}</a></td>
-            <td>{{ s.name }}</td>
+        <tr class="{{ loop.cycle("alt", "") }}">
+            <td><a href="/semesters/{{ semester.id }}/students/{{ s.id}}">{{ s.name }}</a></td>
             <td>{{ s.hours }}</td>
-
         </tr>
+        {% else %}
+        <tr class="alt"><td colspan="2">No students have entered hours for this semester yet.</td></tr>
         {% endfor %}
     </table>
-</div>
 <br />
 Total hours from all students: {{ hours }}
-
-{% if students|length < 1 %}
-no students
+<br />
+<br />
+{% if semester.active %}
+This semester is currently open for students to enter new hours. <a href="/semesters/{{ semester.id }}/close">Close</a>
+{% else %}
+This semester is currently closed to new hour entry. <a href="/semesters/{{ semester.id }}/open">Open</a>
 {% endif %}
+
 {% endblock %}

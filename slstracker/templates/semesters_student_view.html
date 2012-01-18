@@ -1,8 +1,7 @@
 {% extends "admin_base.html" %}
-{% block tab %}tab2{% endblock %}
+{% block tab %}tab1{% endblock %}
 {% block bread %}
-<li><a href="/students/">Students</a></li>
-<li>{{ student.name }}</li>
+<li>Semesters</li>
 {% endblock %}
 {% block content_heading %}{{ student.name }}{% endblock %}</h2>
 {% block content %}
@@ -10,7 +9,7 @@
     <tr><th>Semester</th><th>Student Hours</th><th>Open for new entry?</th></tr>
     {% for semester in semesters %}
     <tr class="{{ loop.cycle("alt", "") }}">
-        <td><a href="/students/{{ student.id }}/semesters/{{ semester.id }}">{{ semester.name }}</a></td>
+        <td><a href="/semesters/{{ semester.id }}">{{ semester.name }}</a></td>
         <td>{{ semester.hours }}</td>
         <td>{{ yn(semester.active) }}</td>
     </tr>

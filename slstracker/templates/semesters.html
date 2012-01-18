@@ -5,13 +5,21 @@
 {% block content_heading %}All Semesters{% endblock %}</h2>
 {% block content %}
 <table>
-    <tr><th></th><th>active</th><th></th></tr>
+    <tr><th>Semester</th><th>Total Hours</th><th>Open for new entry?</th><th></th></tr>
     {% for s in semesters %}
     <tr class="{{ loop.cycle("alt", "") }}">
         <td><a href="/semesters/{{ s.id }}">{{ s.name }}</a></td>
-        <td>{{ s.active }}</td>
+        <td>{{ s.hours }}</td>
+        <td>{{ yn(s.active) }}</td>
         <td><a href="/semesters/{{ s.id }}?_method=DELETE">delete</a></td>
     </tr>
+        {% else %}
+        <tr class="alt"><td colspan="3">No students yet.</td></tr>
     {% endfor %}
 </table>
+<h4>Add New Semester</h5>
+<form action="/semesters/" method="POST">
+    <label>Name: </label><input name="name" type="text" />
+    <input type="submit" value="add"/>
+</form>
 {% endblock %}
