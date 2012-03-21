@@ -9,7 +9,7 @@
     <tr><th>Student</th><th>Total Hours</th></tr>
 {% for s in students %}
 <tr class="{{ loop.cycle("alt", "") }}">
-    <td><a href="/students/{{ s.id }}">{{ s.name }}</a></td>
+    <td><a href="/admin/students/{{ s.id }}">{{ s.name }}</a></td>
     <td>{{ s.hours }}</td>
 </tr>
         {% else %}

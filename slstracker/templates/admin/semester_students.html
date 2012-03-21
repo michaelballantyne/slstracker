@@ -1,6 +1,6 @@
 {% extends "admin_base.html" %}
 {% block bread %}
-<li><a href="/semesters/">Semesters</a></li>
+<li><a href="/admin/semesters/">Semesters</a></li>
 <li>{{ semester.name }}</li>
 {% endblock %}
 {% block content_heading %}{{ semester.name }}{% endblock %}</h2>
@@ -9,7 +9,7 @@
         <tr><th>Student</th><th>Hours this Semester</th></tr>
         {% for s in students %}
         <tr class="{{ loop.cycle("alt", "") }}">
-            <td><a href="/semesters/{{ semester.id }}/students/{{ s.id}}">{{ s.name }}</a></td>
+            <td><a href="/admin/semesters/{{ semester.id }}/students/{{ s.id}}">{{ s.name }}</a></td>
             <td>{{ s.hours }}</td>
         </tr>
         {% else %}
@@ -21,9 +21,9 @@ Total hours from all students: {{ hours }}
 <br />
 <br />
 {% if semester.active %}
-This semester is currently open for students to enter new hours. <a href="/semesters/{{ semester.id }}/close">Close</a>
+This semester is currently open for students to enter new hours. <a href="/admin/semesters/{{ semester.id }}/close">Close</a>
 {% else %}
-This semester is currently closed to new hour entry. <a href="/semesters/{{ semester.id }}/open">Open</a>
+This semester is currently closed to new hour entry. <a href="/admin/semesters/{{ semester.id }}/open">Open</a>
 {% endif %}
 
 {% endblock %}

@@ -16,6 +16,7 @@ class Model:
     def one(query):
         return lambda self, *args: self.engine.execute(query(self, *args)).fetchone()
 
+
     def addStudent(self, username, name):
         return self.student.insert().execute(username=username, name=name) 
 
@@ -26,7 +27,6 @@ class Model:
         self.semester.delete().where(self.semester.c.id == id).execute()
 
     def delete_hours(self, id):
-        print 'trying to delete w/ id ' + str(id)
         self.hours_entry.delete().where(self.hours_entry.c.id == id).execute()
 
     def close_semester(self, id):
@@ -105,3 +105,6 @@ class Model:
 
         return total
 
+    @all
+    def listOrganizations(self):
+        return select([self.organization])

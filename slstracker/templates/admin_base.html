@@ -6,8 +6,8 @@
     <head>
         <title>Service Learning Scholars Tracker</title>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-
         <link rel="stylesheet" type="text/css" href="/static/style.css" />
+        {% block head %}{% endblock %}
     </head>
 
     <body>
@@ -21,9 +21,9 @@
                 <h1>Service Learning Scholars</h1>
                 <div id="{% block tab %}tab1{% endblock %}"> 
                     <ul id="tabnav">
-                        <li class="tab1"><a href="/semesters/">Semesters</a></li>
+                        <li class="tab1"><a href="/">Semesters</a></li>
                         {% if session.admin %}
-                        <li class="tab2"><a href="/students/">Students</a></li>
+                        <li class="tab2"><a href="/admin/students/">Students</a></li>
                         {% endif %}
                     </ul>
                 </div>
