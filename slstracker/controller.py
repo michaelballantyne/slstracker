@@ -1,5 +1,5 @@
 from slstracker import app, model
-from flask import render_template, request, url_for, redirect, session, flash, jsonify
+from flask import render_template, request, url_for, redirect, session, flash, jsonify, make_response
 from functools import wraps
 
 @app.route('/login/')
@@ -40,15 +40,14 @@ def logout():
 def is_admin():
     return session['admin']
 
-def logged_in(view):
-    @wraps(view)
-    def new_view(*args,**kwargs):
-        if 'username' in session:
-            return view(*args,**kwargs)
-        else:
+@app.before_request
+def logged_in():
+    if 'login' not in request.path:
+        if not 'username' in session:
             return redirect(url_for('show_login'))
+        if 'admin' in request.path and not is_admin():
+            return make_response('you dont have access', 404)
 
-    return new_view
 
 def admin(view):
     @wraps(view)
@@ -61,7 +60,6 @@ def admin(view):
     return logged_in(new_view)
 
 @app.route('/')
-@logged_in
 def index():
     if is_admin():
         return redirect(url_for('admin_show_semesters'))
@@ -92,11 +90,10 @@ def show_semester(id):
 
 @app.route('/semesters/<id>', methods=['POST'])
 def add_hours(id):
-    model.addHourEntry(student_id(), int(id), request.form['date'], request.form['hours'], request.form['activity'])
-    return redirect(url_for('show_semester', id=id))
+    model.addHourEntry(student_id(), int(id), request.form['date'], int(request.form['hours']), request.form['activity'], int(request.form['organization']))
+    return redirect(url_for('show_semester', id=id) + '#enterhours')
 
 @app.route('/semesters/<id>/hours/<hid>')
-@logged_in
 def delete_hours(id, hid):
     if request.args.get('_method', default=None) == 'DELETE':
         model.delete_hours(int(hid), )
@@ -104,10 +101,15 @@ def delete_hours(id, hid):
     return redirect(url_for('show_semester', id=id))
 
 @app.route('/organizations/')
-@logged_in
 def organizations_json():
-    print model.listOrganizations()
-    return jsonify({'organizations': [[x['name'], x['contact_name'],x['contact_phone']] for i in range(100) for x in model.listOrganizations()]})
+    return jsonify({'organizations': [[x['name'], x['contact_name'],x['contact_phone'], x['id']] for x in model.listOrganizations()]})
+
+@app.route('/organizations/', methods=['POST'])
+def add_organization_json():
+
+
+    id = model.addOrganization(request.form['name'], request.form['contact_name'], request.form['contact_phone'])
+    return jsonify({'id': id})
 
 @app.route('/admin/semesters/')
 def admin_show_semesters():

@@ -7,7 +7,18 @@
         <title>Service Learning Scholars Tracker</title>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <link rel="stylesheet" type="text/css" href="/static/style.css" />
+        <script src="/static/jquery-1.7.1.min.js"></script>
+        <script src="/static/jquery.validate.min.js"></script>
         {% block head %}{% endblock %}
+        <script>
+            $(document).ready(function() {
+                $('form input, form textarea').not([type="submit"]).addClass('required');
+
+                $("form").each(function() {
+                    $(this).validate({ignore: ''});
+                });
+            });
+        </script>    
     </head>
 
     <body>

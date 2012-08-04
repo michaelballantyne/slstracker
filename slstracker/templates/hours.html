@@ -1,34 +1,47 @@
 {% extends "admin_base.html" %}
 {% block head %}
-<script src="/static/jquery-1.7.1.min.js"></script>
 <script src="/static/jquery-ui-1.8.18.custom.min.js"></script>
 <script>
     $(function() {
         $('#date').datepicker();
 
-        $.ajax({
+        var reloadlist = function() {$.ajax({
             url: "/organizations/",
             dataType: 'json',
             success: function(data) {
+                $('#orgs .selectable').remove();
                 data = data['organizations'];
                 var i, j, tr;
                 for (i = 0; i < data.length; i++) {
                     tr = $('<tr>');
+                    tr.addClass('selectable');
+                    tr.attr('orgid', data[i][ data[i].length - 1 ]);
+                    tr.attr('orgname', data[i][0]);
                     for (j = 0; j < data[i].length - 1; j++) {
                         tr.append( $('<td>').html(data[i][j]) );
                     }
                     $('#orgs').append(tr);
                 }
-
             }
-        });
+    });};
+
+        reloadlist();
+
 
         var dialog = $('#dialog').dialog(
         {
             autoOpen: false,
             title: 'Select an Organization',
             height: 'auto',
-            width: '50em'
+            width: '40em',
+            modal: true,
+            open: function(event, ui) { $('.ui-widget-overlay').bind('click', function(){ $("#dialog").dialog('close'); }); }
+        });
+
+        $('.selectable').live('click', function() {
+            dialog.dialog('close');
+            $('#selectorg').html($(this).attr('orgname'));
+            $('input[name=organization]').val($(this).attr('orgid'));
         });
 
         $('#tabs').tabs();
@@ -37,6 +50,18 @@
             dialog.dialog('open');
             return false; 
         });
+
+        $('#orgsform').submit(function() {
+            $.post("/organizations/", $(this).serialize(), function(result) {
+                $('#selectorg').html($('input[name=name]').val());
+                $('input[name=organization]').val(result.id);
+                dialog.dialog('close');
+                reloadlist();
+                $('#tabs').tabs('select',0);
+            }); 
+            return false;
+        });
+
     });
 </script>
 <link rel="stylesheet" type="text/css" href="/static/custom-theme/jquery-ui-1.8.18.custom.css" />
@@ -82,7 +107,7 @@ Total hours for semester: {{ hours }}
             </table>
 	</div>
         <div id="tabs-2">
-            <form action="/organizations/" method="POST">
+            <form action="/organizations/" method="POST" id="orgsform">
                 <label>Name: </label><input name="name" type="text" />
                 <label>Contact Name: </label><input name="contact_name" type="text" />
                 <label>Contact Phone: </label><input name="contact_phone" type="text" />
@@ -92,15 +117,17 @@ Total hours for semester: {{ hours }}
     </div>
 </div>
 
+<a name="enterhours"></a>
 <h4>Enter additional hours:</h4>
 <form action="/semesters/{{ semester.id }}" method="POST">
-    <label>Date: </label><input name="date" type="date" id="date" />
-    <label>Number of Hours: </label><input name="hours" type="number" />
-    <label>Activity: </label><input name="activity" type="text" />
+    <label>Date: </label><input class="date" name="date" type="date" id="date" />
+    <label>Number of Hours: </label><input class="digits" name="hours" type="number" />
+    <label>Activity: </label><input class="text" name="activity" type="text" />
     <label>Organization: </label>
     <a href="#" id="selectorg">Select an organization</a>
-    <br/>
-    <input type="submit" value="add"/>
+    <input class="digits" name="organization" type="hidden" />
+    <br/><br/>
+    <input class="submit" type="submit" value="add"/>
 </form>
 {% else %}
 <p>Your hours for this semester are no longer editable.</P>
