@@ -1,2 +1,5 @@
 syntax: glob
 env
+*.swp
+**.pyc
+.DS_Store

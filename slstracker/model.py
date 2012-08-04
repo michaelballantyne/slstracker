@@ -16,6 +16,7 @@ class Model:
     def one(query):
         return lambda self, *args: self.engine.execute(query(self, *args)).fetchone()
 
+
     def addStudent(self, username, name):
         return self.student.insert().execute(username=username, name=name) 
 
@@ -26,7 +27,6 @@ class Model:
         self.semester.delete().where(self.semester.c.id == id).execute()
 
     def delete_hours(self, id):
-        print 'trying to delete w/ id ' + str(id)
         self.hours_entry.delete().where(self.hours_entry.c.id == id).execute()
 
     def close_semester(self, id):
@@ -44,11 +44,11 @@ class Model:
                 and_(self.student_semester.c.student == student_id,
                     self.student_semester.c.semester == semester_id))
 
-    def addHourEntry(self, student_id, semester_id, date, hours, activity):
+    def addHourEntry(self, student_id, semester_id, date, hours, activity, organization):
         if self.getStudentSemester(student_id, semester_id) is None:
-            self.student_semester.insert().execute(student=student_id, semester=semester_id)
+            self.student_semester.insert().execute(student=student_id, d=semester_id)
 
-        self.hours_entry.insert().execute(student=student_id, semester=semester_id, event_date=date, hours=hours, activity=activity, organization=1)
+        self.hours_entry.insert().execute(student=student_id, semester=semester_id, event_date=date, hours=hours, activity=activity, organization=organization)
 
     @one
     def findStudent(self, name):
@@ -105,3 +105,13 @@ class Model:
 
         return total
 
+    @all
+    def listOrganizations(self):
+        return select([self.organization])
+
+    def addOrganization(self, name, cname, cphone):
+        return id(self.organization.insert().execute(name=name, contact_name=cname, contact_phone=cphone))
+
+    @one
+    def getMatchingOrganizationID(self, name, contact_name, contact_phone):
+        return select([self.organization], and_(self.organization.c.name == name, self.organization.c.contact_name == contact_name, self.organization.c.contact_phone == contact_phone))
