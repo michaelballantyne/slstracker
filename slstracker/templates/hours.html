@@ -3,6 +3,7 @@
 
 {% block head %}
 <script src="/static/jquery-ui-1.8.18.custom.min.js"></script>
+<script src="/static/orgsdialog.js"></script>
 <script src="/static/hoursentry.js"></script>
 <link rel="stylesheet" type="text/css" href="/static/custom-theme/jquery-ui-1.8.18.custom.css" />
 {% endblock head %}
@@ -66,18 +67,18 @@
 {% endif %}
 
 <div id="dialog">
-    <div id="tabs">
+    <div id="orgs-dialog-tabs">
 	<ul>
-            <li><a href="#tabs-1">Choose Organization</a></li>
-            <li><a href="#tabs-2">Add New Organization</a></li>
+            <li><a href="#orgs-dialog-tabs-1">Choose Organization</a></li>
+            <li><a href="#orgs-dialog-tabs-2">Add New Organization</a></li>
 	</ul>
-	<div id="tabs-1">
-            <table id="orgs">
+	<div id="orgs-dialog-tabs-1">
+            <table class="orgs">
                 <tr><th>Organization</th><th>Contact Person</th><th>Contact Phone</th></tr>
             </table>
 	</div>
-        <div id="tabs-2">
-            <form action="/organizations/" method="POST" id="orgsform">
+        <div id="orgs-dialog-tabs-2">
+            <form action="/organizations/" method="POST" class="orgsform">
                 <label>Name: </label><input name="name" type="text" />
                 <label>Contact Name: </label><input name="contact_name" type="text" />
                 <label>Contact Phone: </label><input name="contact_phone" type="text" />
