@@ -1,3 +1,11 @@
+fieldset {
+    border-radius: 4px;
+}
+
+input {
+    display: block;
+}
+
 label {
     display: block
 }

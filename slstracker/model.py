@@ -46,7 +46,7 @@ class Model:
 
     def addHourEntry(self, student_id, semester_id, date, hours, activity, organization):
         if self.getStudentSemester(student_id, semester_id) is None:
-            self.student_semester.insert().execute(student=student_id, d=semester_id)
+            self.student_semester.insert().execute(student=student_id, semester=semester_id)
 
         self.hours_entry.insert().execute(student=student_id, semester=semester_id, event_date=date, hours=hours, activity=activity, organization=organization)
 

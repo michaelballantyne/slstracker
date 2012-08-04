@@ -17,9 +17,14 @@
         <tr class="alt"><td colspan="3">No semesters yet.</td></tr>
     {% endfor %}
 </table>
-<h4>Add New Semester</h5>
+<br/>
 <form action="/admin/semesters/" method="POST">
+    <fieldset>
+        <legend>
+            Add New Semester
+        </legend>
     <label>Name: </label><input name="name" type="text" />
     <input type="submit" value="add"/>
+</fieldset>
 </form>
 {% endblock %}
