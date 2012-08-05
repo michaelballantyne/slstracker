@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 {% macro yn(boolean) %}{% if boolean %}yes{% else %}no{% endif %}{% endmacro %}
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -9,6 +8,7 @@
         <link rel="stylesheet" type="text/css" href="/static/style.css" />
         <script src="/static/jquery-1.7.1.min.js"></script>
         <script src="/static/jquery.validate.min.js"></script>
+        <script src="/static/jquery.qtip-1.0.0-rc3.min.js"></script>
         {% block head %}{% endblock %}
         <script>
             $(document).ready(function() {

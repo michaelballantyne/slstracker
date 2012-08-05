@@ -1,5 +1,13 @@
+.orgsform input[type="text"] {
+    width: 20em;
+}
+
 table.orgs { 
     overflow: auto;
+}
+
+.nodisplay {
+    display: none;
 }
 
 .filter input, .filter label {

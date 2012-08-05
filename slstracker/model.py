@@ -1,4 +1,4 @@
-from sqlalchemy.sql import select, and_
+from sqlalchemy.sql import select, and_, join
 
 
 class Model:
@@ -84,9 +84,10 @@ class Model:
 
     @all
     def listHourEntries(self, student_id, semester_id):
-        return select([self.hours_entry], 
+        return select([self.hours_entry, self.organization.c.name], 
                 and_(self.hours_entry.c.student == student_id, 
-                     self.hours_entry.c.semester == semester_id))
+                     self.hours_entry.c.semester == semester_id), 
+                [join(self.hours_entry, self.organization)])
                 
     def getTotalHours(self, student_id, semester_id):
         total = 0
@@ -113,5 +114,5 @@ class Model:
         return id(self.organization.insert().execute(name=name, contact_name=cname, contact_phone=cphone))
 
     @one
-    def getMatchingOrganizationID(self, name, contact_name, contact_phone):
-        return select([self.organization], and_(self.organization.c.name == name, self.organization.c.contact_name == contact_name, self.organization.c.contact_phone == contact_phone))
+    def getOrganization(self, org_id):
+        return select([self.organization], self.organization.c.id == org_id)

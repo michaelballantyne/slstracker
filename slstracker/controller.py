@@ -192,3 +192,8 @@ def admin_show_hours(student_id, semester_id):
             semester = model.getSemester(semester_id),
             entries = model.listHourEntries(student_id, semester_id),
             hours = model.getTotalHours(student_id, semester_id))
+
+@app.route('/organizations/<id>/popup')
+def organization_popup(id):
+    return render_template('orgpopup.html',
+            organization = model.getOrganization(int(id)))
