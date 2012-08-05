@@ -3,6 +3,7 @@
 
 {% block head %}
 <script src="/static/jquery-ui-1.8.18.custom.min.js"></script>
+<script src="/static/quicksilver.js"></script>
 <script src="/static/orgsdialog.js"></script>
 <script src="/static/hoursentry.js"></script>
 <link rel="stylesheet" type="text/css" href="/static/custom-theme/jquery-ui-1.8.18.custom.css" />
@@ -66,13 +67,16 @@
 <p>Your hours for this semester are no longer editable.</P>
 {% endif %}
 
-<div id="dialog">
+<div id="orgsdialog">
     <div id="orgs-dialog-tabs">
 	<ul>
             <li><a href="#orgs-dialog-tabs-1">Choose Organization</a></li>
             <li><a href="#orgs-dialog-tabs-2">Add New Organization</a></li>
 	</ul>
 	<div id="orgs-dialog-tabs-1">
+            <fieldset class="filter">
+                <label>Search: </label><input type="text" name="filter" class="filter" />
+            </fieldset>
             <table class="orgs">
                 <tr><th>Organization</th><th>Contact Person</th><th>Contact Phone</th></tr>
             </table>

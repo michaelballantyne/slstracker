@@ -1,3 +1,11 @@
+table.orgs { 
+    overflow: auto;
+}
+
+.filter input, .filter label {
+    display: inline
+}
+
 fieldset {
     border-radius: 4px;
 }
