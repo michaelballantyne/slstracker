@@ -1,3 +1,7 @@
+.right {
+    float: right;
+}
+
 .orgsform input[type="text"] {
     width: 20em;
 }

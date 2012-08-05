@@ -8,11 +8,23 @@
 {% block content_heading %}{{ student.name }}'s hours for {{ semester.name }}{% endblock %}</h2>
 {% block content %}
 <table>
-    <tr><th>Date</th><th>Hours</th><th>Activity</th</tr>
+    <tr>
+        <th>Date</th>
+        <th>Hours</th>
+        <th>Activity</th>
+        <th>Organization</th>
+    </tr>
     {% for entry in entries %}
-    <tr class="{{ loop.cycle("alt", "") }}"><td>{{ entry.event_date }}</td><td>{{ entry.hours }}</td><td>{{ entry.activity }}</td></tr>
-        {% else %}
-        <tr class="alt"><td colspan="3">No hours entered yet.</td></tr>
+    <tr class="{{ loop.cycle("alt", "") }}">
+        <td>{{ entry.event_date }}</td>
+        <td>{{ entry.hours }}</td>
+        <td>{{ entry.activity }}</td>
+        <td class="organization" data-orgid="{{ entry.organization }}">{{ entry.name}}<img class="right" src="/static/hovericon.png" /></td>
+    </tr>
+    {% else %}
+    <tr class="alt">
+        <td colspan="3">No hours entered yet.</td>
+    </tr>
     {% endfor %}
 </table>
 <br />

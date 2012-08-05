@@ -38,7 +38,7 @@
         <td>{{ entry.event_date }}</td>
         <td>{{ entry.hours }}</td>
         <td>{{ entry.activity }}</td>
-        <td class="organization" data-orgid="{{ entry.organization }}">{{ entry.name}}</td>
+        <td class="organization" data-orgid="{{ entry.organization }}">{{ entry.name}}<img class="right" src="/static/hovericon.png" /></td>
 
         {% if semester.active %}
         <td><a href="/semesters/{{ semester.id }}/hours/{{ entry.id }}?_method=DELETE">delete</a></td>
