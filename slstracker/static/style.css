@@ -2,16 +2,16 @@
     float: right;
 }
 
+#reflection {
+    width: 100%;
+}
+
 .orgsform input[type="text"] {
     width: 20em;
 }
 
 table.orgs { 
     overflow: auto;
-}
-
-.nodisplay {
-    display: none;
 }
 
 .filter input, .filter label {
@@ -71,7 +71,7 @@ ul#tabnav {
     padding: 3px 10px 3px 10px;
 }
 
-div#tab1, div#tab2 {
+div#tab1, div#tab2, div#tab3{
     margin-left: 6em;
     padding-top: .2em;
 }
@@ -80,11 +80,11 @@ ul#tabnav li {
     display: inline; 
 }
 
-div#tab1 li.tab1, div#tab2 li.tab2 { 
+div#tab1 li.tab1, div#tab2 li.tab2, div#tab3 li.tab3 { 
     border-bottom: 1px solid #596185; 
 }
 
-div#tab1 li.tab1 a, div#tab2 li.tab2 a {
+div#tab1 li.tab1 a, div#tab2 li.tab2 a, div#tab3 li.tab3 a {
     background-color: #596185;
     color: white;
 }

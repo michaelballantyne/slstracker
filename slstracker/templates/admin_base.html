@@ -13,7 +13,7 @@
         {% block head %}{% endblock %}
         <script>
             $(document).ready(function() {
-                $('form input, form textarea').not([type="submit"]).addClass('required');
+                $('form input, form textarea').not([type="submit"]).not(".novalidate").addClass('required');
 
                 $("form").each(function() {
                     $(this).validate({ignore: ''});
@@ -36,6 +36,7 @@
                         <li class="tab1"><a href="/">Semesters</a></li>
                         {% if session.admin %}
                         <li class="tab2"><a href="/admin/students/">Students</a></li>
+                        <li class="tab3"><a href="/admin/organizations/">Organizations</a></li>
                         {% endif %}
                     </ul>
                 </div>

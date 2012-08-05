@@ -36,13 +36,31 @@ class Model:
         self.semester.update().values(active=True).where(self.semester.c.id == id).execute()
 
     def semesterHasEntries(self, id):
-        return 0 != self.student_semester.count(self.student_semester.c.semester == id).execute()
+        return 0 != self.student_semester.count(self.student_semester.c.semester == id).execute().first()[0]
 
     @one
     def getStudentSemester(self, student_id, semester_id):
         return select([self.student_semester],
                 and_(self.student_semester.c.student == student_id,
                     self.student_semester.c.semester == semester_id))
+
+    def getReflection(self, student_id, semester_id):
+        studentSemester = self.getStudentSemester(student_id, semester_id)
+
+        if studentSemester is not None and studentSemester.reflection is not None:
+             return studentSemester.reflection
+        else:
+             return ""
+
+    def updateReflection(self, student_id, semester_id, reflection):
+        print reflection
+        if self.getStudentSemester(student_id, semester_id) is None:
+            self.student_semester.insert().execute(student=student_id, semester=semester_id)
+
+        self.student_semester.update().where(
+                and_(self.student_semester.c.student == student_id, 
+                    self.student_semester.c.semester == semester_id)) \
+                .values(reflection=reflection).execute()
 
     def addHourEntry(self, student_id, semester_id, date, hours, activity, organization):
         if self.getStudentSemester(student_id, semester_id) is None:
@@ -116,3 +134,9 @@ class Model:
     @one
     def getOrganization(self, org_id):
         return select([self.organization], self.organization.c.id == org_id)
+
+    def organizationHasEntries(self, id):
+        return 0 != self.hours_entry.count(self.hours_entry.c.organization == id).execute().first()[0]
+
+    def delete_organization(self, id):
+        self.organization.delete().where(self.organization.c.id == id).execute()

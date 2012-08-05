@@ -17,15 +17,10 @@ create table student (
     final_project int references final_project(id)
 );
 
-create table reflection (
-    id serial primary key,
-    body text not null
-);
-
 create table student_semester (
     semester int references semester(id),
     student int references student(id),
-    reflection int references reflection(id),
+    reflection text,
     primary key (semester, student)
 );
 

@@ -3,6 +3,7 @@
 
 {% block head %}
 <script src="/static/jquery-ui-1.8.18.custom.min.js"></script>
+<script src="/static/tiny_mce/jquery.tinymce.js"></script>
 <script src="/static/quicksilver.js"></script>
 <script src="/static/orgsdialog.js"></script>
 <script src="/static/hoursentry.js"></script>
@@ -20,11 +21,12 @@
 
 
 {% block content_heading %}
-{{ student.name }}'s hours for {{ semester.name }}
+{{ semester.name }}
 {% endblock %}
 
 
 {% block content %}
+<h2>Hours</h2>
 <table>
     <tr><th>Date</th><th>Hours</th><th>Activity</th><th>Organization</th>
 
@@ -64,8 +66,21 @@
         <input class="submit" type="submit" value="add"/>
     </fieldset>
 </form>
-{% else %}
-<p>Your hours for this semester are no longer editable.</P>
+{% endif %}
+
+
+<h2>Reflection</h2>
+<form action="/semesters/{{ semester.id }}/reflection" method="POST">
+    <textarea name="reflection" class="novalidate" id="reflection" rows="20" cols="60">{{ reflection }}</textarea>
+    <p id="unsaved"></p>
+
+    {% if semester.active %}
+    <input class="submit" type="submit" id="reflectionsubmit" value="save">
+    {% endif %}
+</form>
+
+{% if not semester.active %}
+<p>Your data for this semester is no longer editable.</P>
 {% endif %}
 
 <div id="orgsdialog">
@@ -85,7 +100,7 @@
         <div id="orgs-dialog-tabs-2">
             <form action="/organizations/" method="POST" class="orgsform">
                 <label>Name: </label><input name="name" type="text" />
-                <label>Contact Name: </label><input name="contact_name" type="text" />
+                <label>Contact Person: </label><input name="contact_name" type="text" />
                 <label>Contact Phone: </label><input name="contact_phone" type="text" />
                 <input type="submit" value="add" />
             </form>

@@ -82,11 +82,17 @@ def show_semesters():
 
 @app.route('/semesters/<id>')
 def show_semester(id):
-            return render_template('hours.html', 
-            student = model.getStudent(student_id()),
-            semester = model.getSemester(int(id)),
-            entries = model.listHourEntries(student_id(), int(id)),
-            hours = model.getTotalHours(student_id(), int(id)))
+    return render_template('hours.html', 
+        student = model.getStudent(student_id()),
+        semester = model.getSemester(int(id)),
+        entries = model.listHourEntries(student_id(), int(id)),
+        hours = model.getTotalHours(student_id(), int(id)),
+        reflection = model.getReflection(student_id(), int(id)))
+
+@app.route('/semesters/<id>/reflection', methods=['POST'])
+def updateReflection(id):
+    model.updateReflection(student_id(), int(id), request.form['reflection'])
+    return redirect(url_for('show_semester', id=id) + "#reflection")
 
 @app.route('/semesters/<id>', methods=['POST'])
 def add_hours(id):
@@ -110,6 +116,11 @@ def add_organization_json():
 
     id = model.addOrganization(request.form['name'], request.form['contact_name'], request.form['contact_phone'])
     return jsonify({'id': id})
+
+@app.route('/admin/organizations/', methods=['POST'])
+def admin_add_organization():
+    model.addOrganization(request.form['name'], request.form['contact_name'], request.form['contact_phone'])
+    return redirect(url_for('admin_show_organizations'))
 
 @app.route('/admin/semesters/')
 def admin_show_semesters():
@@ -191,9 +202,28 @@ def admin_show_hours(student_id, semester_id):
             student = model.getStudent(student_id),
             semester = model.getSemester(semester_id),
             entries = model.listHourEntries(student_id, semester_id),
-            hours = model.getTotalHours(student_id, semester_id))
+            hours = model.getTotalHours(student_id, semester_id),
+            reflection = model.getReflection(student_id, semester_id))
 
 @app.route('/organizations/<id>/popup')
 def organization_popup(id):
     return render_template('orgpopup.html',
             organization = model.getOrganization(int(id)))
+
+@app.route('/admin/organizations/')
+def admin_show_organizations():
+    return render_template('admin/organizations.html',
+            organizations = model.listOrganizations())
+    
+@app.route('/admin/organizations/<id>', methods=['DELETE'])
+def admin_delete_organization(id):
+    if not model.organizationHasEntries(int(id)):
+        model.delete_organization(int(id));
+    else:
+        flash("Students have entered hours for that organization - it can no longer be deleted")
+    return redirect(url_for('admin_show_organizations'))
+
+@app.route('/admin/organizations/<id>')
+def admin_show_organization(id):
+    if request.args.get('_method', default=None) == 'DELETE':
+        return admin_delete_organization(id)

@@ -1,4 +1,10 @@
 {% extends "admin_base.html" %}
+
+{% block head %}
+<script src="/static/tiny_mce/jquery.tinymce.js"></script>
+<script src="/static/reflection.js"></script>
+{% endblock %}
+
 {% block tab %}tab2{% endblock %}
 {% block bread %}
 <li><a href="/admin/students/">Students</a></li>
@@ -7,6 +13,7 @@
 {% endblock %}
 {% block content_heading %}{{ student.name }}'s hours for {{ semester.name }}{% endblock %}</h2>
 {% block content %}
+<h2>Hours</h2>
 <table>
     <tr>
         <th>Date</th>
@@ -29,4 +36,8 @@
 </table>
 <br />
 Total hours for semester: {{ hours }}
+
+<h2>Reflection</h2>
+<textarea name="reflection" class="novalidate" id="reflection" rows="20" cols="60">{{ reflection }}</textarea>
+
 {% endblock %}
