@@ -73,7 +73,7 @@ def show_semesters():
     semesters = [dict(row) for row in semesters]
 
     for semester in semesters:
-        semester["hours"] = model.getTotalHours(None, semester['id'])
+        semester["hours"] = model.getTotalHours(student_id(), semester['id'])
 
     return render_template('semesters.html', 
             student = model.getStudent(student_id()), 
@@ -169,7 +169,8 @@ def admin_show_semester(id):
         return render_template('admin/semester_students.html', 
                 students = students,
                 semester = model.getSemester(id),
-                hours = model.getTotalHours(None, id))
+                hours = model.getTotalHours(None, id),
+                reflections = model.getSemesterReflections(id))
 
 @app.route('/admin/students/')
 def show_students():

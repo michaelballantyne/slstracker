@@ -44,6 +44,11 @@ class Model:
                 and_(self.student_semester.c.student == student_id,
                     self.student_semester.c.semester == semester_id))
 
+    @all 
+    def getSemesterReflections(self, semester_id):
+        return select([self.student_semester.c.reflection, self.student.c.name, self.semester.c.name],
+                self.student_semester.c.semester == semester_id, [join(self.student_semester, self.student).join(self.semester)], use_labels=True);
+
     def getReflection(self, student_id, semester_id):
         studentSemester = self.getStudentSemester(student_id, semester_id)
 

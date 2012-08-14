@@ -70,14 +70,17 @@
 
 
 <h2>Reflection</h2>
+{% if semester.active %}
 <form action="/semesters/{{ semester.id }}/reflection" method="POST">
     <textarea name="reflection" class="novalidate" id="reflection" rows="20" cols="60">{{ reflection }}</textarea>
-    <p id="unsaved"></p>
-
-    {% if semester.active %}
+    <p id="unsaved">You have unsaved changes.</p>
     <input class="submit" type="submit" id="reflectionsubmit" value="save">
-    {% endif %}
 </form>
+{% else %}
+<div class="singlereflection">
+{{ reflection | safe }}
+</div>
+{% endif %}
 
 {% if not semester.active %}
 <p>Your data for this semester is no longer editable.</P>

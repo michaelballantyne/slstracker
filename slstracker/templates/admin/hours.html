@@ -38,6 +38,7 @@
 Total hours for semester: {{ hours }}
 
 <h2>Reflection</h2>
-<textarea name="reflection" class="novalidate" id="reflection" rows="20" cols="60">{{ reflection }}</textarea>
+<div class="singlereflection">
+{{ reflection | safe }}</div>
 
 {% endblock %}
