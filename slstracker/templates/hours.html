@@ -59,10 +59,10 @@
         <legend>Enter Addtional Hours</legend>
         <label>Date: </label><input class="date" name="date" type="text" id="date" />
         <label>Number of Hours: </label><input class="digits" name="hours" type="number" />
-        <label>Activity: </label><textarea rows="3" cols="30" class="text" name="activity" ></textarea>
         <label>Organization: </label>
         <a href="#" id="selectorg">Select an organization</a>
         <input class="digits" name="organization" type="hidden" />
+        <label>Activity: </label><textarea rows="3" cols="30" class="text" name="activity" ></textarea>
         <input class="submit" type="submit" value="add"/>
     </fieldset>
 </form>
@@ -102,7 +102,7 @@
 	</div>
         <div id="orgs-dialog-tabs-2">
             <form action="/organizations/" method="POST" class="orgsform">
-                <label>Name: </label><input name="name" type="text" />
+                <label>Organization Name: </label><input name="name" type="text" />
                 <label>Contact Person: </label><input name="contact_name" type="text" />
                 <label>Contact Phone: </label><input name="contact_phone" type="text" />
                 <input type="submit" value="add" />

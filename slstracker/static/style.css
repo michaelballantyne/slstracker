@@ -1,3 +1,11 @@
+label {
+    margin-top: 10px;
+}
+
+legend+label {
+    margin-top: 0px;
+}
+
 .right {
     float: right;
 }
