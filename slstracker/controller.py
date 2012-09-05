@@ -112,8 +112,6 @@ def organizations_json():
 
 @app.route('/organizations/', methods=['POST'])
 def add_organization_json():
-
-
     id = model.addOrganization(request.form['name'], request.form['contact_name'], request.form['contact_phone'])
     return jsonify({'id': id})
 

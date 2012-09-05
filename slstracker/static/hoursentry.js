@@ -18,7 +18,6 @@ $(function () {
         onSelection: function (orgName, orgId) {
             linkElement.html(orgName);
             $('input[name=organization]').val(orgId);
-
         }
     });
 

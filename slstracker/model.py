@@ -134,7 +134,7 @@ class Model:
         return select([self.organization])
 
     def addOrganization(self, name, cname, cphone):
-        return id(self.organization.insert().execute(name=name, contact_name=cname, contact_phone=cphone))
+        return self.id(self.organization.insert().execute(name=name, contact_name=cname, contact_phone=cphone))
 
     @one
     def getOrganization(self, org_id):
