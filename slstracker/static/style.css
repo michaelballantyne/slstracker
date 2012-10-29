@@ -113,32 +113,41 @@ body {
 
 label.error { color: red }
 
-ul#tabnav {
+ul#tabnav, ul#subtabs {
     font: bold 15px verdana, arial, sans-serif;
     list-style-type: none;
     margin: 1em 0 0 0;
     padding: 3px 10px 3px 10px;
 }
 
-div#tab1, div#tab2, div#tab3{
+ul#subtabs {
+    text-align: right;
+    margin-top: -1em;
+}
+
+div.tab1, div.tab2, div.tab3{
     margin-left: 6em;
     padding-top: .2em;
 }
 
-ul#tabnav li { 
+ul#tabnav li, ul#subtabs li { 
     display: inline; 
 }
 
-div#tab1 li.tab1, div#tab2 li.tab2, div#tab3 li.tab3 { 
+div.tab1 li.tab1, div.tab2 li.tab2, div.tab3 li.tab3 { 
     border-bottom: 1px solid #596185; 
 }
 
-div#tab1 li.tab1 a, div#tab2 li.tab2 a, div#tab3 li.tab3 a {
+div.tab1 li.tab1 a, div.tab2 li.tab2 a, div.tab3 li.tab3 a {
     background-color: #596185;
     color: white;
 }
 
-ul#tabnav li a {
+ul#subtabs li a {
+
+}
+
+ul#tabnav li a, ul#subtabs li a {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     padding: 3px 4px;

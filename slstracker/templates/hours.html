@@ -24,8 +24,17 @@
 {{ semester.name }}
 {% endblock %}
 
+{% block extratabs %}
+    <div class="tab1">
+        <ul id="subtabs">
+            <li class="tab1"><a href="/semesters/{{ semester.id }}/hours">Hours</a></li>
+            <li class="tab2"><a href="/semesters/{{ semester.id }}/reflection">Reflection</a></li>
+        </ul>
+    </div>
+{% endblock %}
 
 {% block content %}
+
 <h2>Hours</h2>
 <table>
     <tr><th>Date</th><th>Hours</th><th>Activity</th><th>Organization</th>
@@ -36,7 +45,7 @@
     </tr>
 
     {% for entry in entries %}
-    <tr class="{{ loop.cycle("alt", "") }}">
+    <tr class="{{ loop.cycle("al:t", "") }}">
         <td>{{ entry.event_date }}</td>
         <td>{{ entry.hours }}</td>
         <td>{{ entry.activity }}</td>
@@ -54,7 +63,7 @@
 <p>Total hours for semester: {{ hours }}<p>
 
 {% if semester.active %}
-<form action="/semesters/{{ semester.id }}" method="POST">
+<form id="enterhours" action="/semesters/{{ semester.id }}" method="POST">
     <fieldset>
         <legend>Enter Addtional Hours</legend>
         <label>Date: </label><input class="date" name="date" type="text" id="date" />
