@@ -32,7 +32,7 @@
                 </div>
                 <img src="/static/logo-70h.jpg"/ id="logo">
                 <h1>Service Learning Scholars</h1>
-                <div id="{% block tab %}tab1{% endblock %}"> 
+                <div class="{% block tab %}tab1{% endblock %}"> 
                     <ul id="tabnav">
                         <li class="tab1"><a href="/">Semesters</a></li>
                         {% if session.admin %}
@@ -52,6 +52,7 @@
         </div>
         <div id="content-outer">
             <h2>{% block content_heading %}Content Header{% endblock %}</h2>
+            {% block extratabs %}{% endblock %}
             <div class="content-inner">
                 <div id="flash">
                     {% for msg in get_flashed_messages() %}
