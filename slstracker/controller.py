@@ -67,7 +67,7 @@ def updateReflection(id):
 @app.route('/semesters/<id>/hours', methods=['POST'])
 def add_hours(id):
     model.addHourEntry(g.user_id, int(id), request.form['date'], int(request.form['hours']), request.form['activity'], int(request.form['organization']))
-    return redirect(url_for('show_semester', id=id) + '#enterhours')
+    return redirect(url_for('show_hours', id=id) + '#enterhours')
 
 @app.route('/semesters/<id>/hours/<hid>')
 def delete_hours(id, hid):
