@@ -2,13 +2,6 @@ from flask import Flask
 from sqlalchemy import create_engine
 from sqlalchemy.schema import MetaData
 from slstracker.model import Model
-import os, sys, ConfigParser
-
-path = os.path.abspath(os.path.dirname(sys.argv[0]))
-config_filename = os.path.join(path, 'tracker.cfg')
-
-config = ConfigParser.RawConfigParser()
-config.read(config_filename)
 
 class App(Flask):
     def dispatch_request(self):
@@ -21,13 +14,14 @@ class App(Flask):
             t.rollback()
             raise
 
-app = App(__name__)
-app.secret_key="dfjasld1r9sdj5w0gsldjd6rezg0fx"
+app = App(__name__, instance_relative_config=True)
 app.debug = True
+app.config.from_pyfile('application.cfg')
+print app.instance_path
 
-connection_string = 'postgresql+psycopg2://%s:%s@%s:%d/%s' % (config.get('db', 'username'), config.get('db', 'password'), config.get('db', 'host'), config.getint('db', 'port'), config.get('db', 'database'))
+connection_string = 'postgresql+psycopg2://%s:%s@%s:%d/%s' % (app.config['DB_USERNAME'], app.config['DB_PASSWORD'], app.config['DB_HOST'], app.config['DB_PORT'], app.config['DB_DATABASE'])
 
-engine = create_engine(connection_string, echo=config.getboolean('db', 'echosql'), strategy='threadlocal', convert_unicode=True)
+engine = create_engine(connection_string, echo=app.config['DB_ECHOSQL'], strategy='threadlocal', convert_unicode=True)
 
 meta = MetaData()
 meta.bind = engine
