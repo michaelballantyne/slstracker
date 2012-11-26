@@ -1,5 +1,5 @@
 from slstracker import app, model
-from flask import g, render_template, request, url_for, redirect, flash, jsonify, abort
+from flask import g, render_template, request, url_for, redirect, flash, jsonify, abort, config
 
 @app.before_request
 def auth():
@@ -9,7 +9,7 @@ def auth():
     except KeyError:
         return abort(500)
 
-    g.admin = g.username == 'admin'
+    g.admin = g.username in app.config['ADMIN_USERS']
 
     if not g.admin:
         user = model.findStudent(g.username)
