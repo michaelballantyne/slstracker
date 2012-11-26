@@ -12,4 +12,4 @@ class AuthWrapper(object):
 application = AuthWrapper(app)
 if __name__ == "__main__":
     from werkzeug.serving import run_simple
-    run_simple('localhost', int(sys.argv[1]), application, use_reloader=True, use_debugger=True, use_evalex=True)
+    run_simple('0.0.0.0', int(sys.argv[1]), application, use_reloader=True, use_debugger=True, use_evalex=True)
