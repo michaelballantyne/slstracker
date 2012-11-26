@@ -1,0 +1,46 @@
+{% extends "admin_base.html" %}
+
+
+{% block head %}
+<script src="/static/tiny_mce/jquery.tinymce.js"></script>
+<script src="/static/reflection.js"></script>
+{% endblock head %}
+
+{% block tab %}tab1{% endblock %}
+{% block bread %}
+<li><a href="/">Semesters</a></li>
+<li>{{ semester.name }}</li>
+<li>Reflection</li>
+{% endblock %}
+
+{% block content_heading %}
+{{ semester.name }}
+{% endblock %}
+
+{% block extratabs %}
+    <div class="tab2">
+        <ul id="subtabs">
+            <li class="tab1"><a href="/semesters/{{ semester.id }}/hours">Hours</a></li>
+            <li class="tab2"><a href="/semesters/{{ semester.id }}/reflection">Reflection</a></li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block content %}
+<h2>Reflection</h2>
+{% if semester.active %}
+<form action="/semesters/{{ semester.id }}/reflection" method="POST">
+    <textarea name="reflection" class="novalidate" id="reflection" rows="20" cols="60">{{ reflection }}</textarea>
+    <p id="unsaved">You have unsaved changes.</p>
+    <input class="submit" type="submit" id="reflectionsubmit" value="save">
+</form>
+{% else %}
+<div class="singlereflection">
+{{ reflection | safe }}
+</div>
+{% endif %}
+
+{% if not semester.active %}
+<p>Your data for this semester is no longer editable.</P>
+{% endif %}
+{% endblock %}

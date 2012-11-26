@@ -105,6 +105,10 @@ class Model:
     def getSemester(self, semester_id):
         return select([self.semester], self.semester.c.id == semester_id)
 
+    @one
+    def findSemester(self, name):
+        return select([self.semester], self.semester.c.name == name)
+
     @all
     def listHourEntries(self, student_id, semester_id):
         return select([self.hours_entry, self.organization.c.name], 
@@ -139,6 +143,10 @@ class Model:
     @one
     def getOrganization(self, org_id):
         return select([self.organization], self.organization.c.id == org_id)
+    
+    @one
+    def findOrganization(self, name):
+        return select([self.organization], self.organization.c.name == name)
 
     def organizationHasEntries(self, id):
         return 0 != self.hours_entry.count(self.hours_entry.c.organization == id).execute().first()[0]

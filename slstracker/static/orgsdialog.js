@@ -34,15 +34,19 @@
 
             this.element.find('.orgsform').submit(function () {
                 $.post(widget.options.dataUrl, $(this).serialize(), function (result) {
-                    var orgName = widget.element.find('input[name=name]').val();
-                    var orgId = result.id;
+                    if (!result.error) {
+                        var orgName = widget.element.find('input[name=name]').val();
+                        var orgId = result.id;
 
-                    widget.element.dialog('close');
-                    widget.element.find('.orgsform')[0].reset();
-                    widget.loadFromServer()
-                    widget._tabs.tabs('select', 0);
+                        widget.element.dialog('close');
+                        widget.element.find('.orgsform')[0].reset();
+                        widget.loadFromServer()
+                        widget._tabs.tabs('select', 0);
 
-                    widget.options.onSelection(orgName, orgId);
+                        widget.options.onSelection(orgName, orgId);
+                    } else {
+                        widget.element.find('.orgsform').validate().showErrors(result.error);
+                    }
                 }); 
 
                 return false;

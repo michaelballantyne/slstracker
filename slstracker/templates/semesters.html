@@ -9,7 +9,7 @@
     <tr><th>Semester</th><th>Your Hours</th><th>Open for new entry?</th></tr>
     {% for semester in semesters %}
     <tr class="{{ loop.cycle("alt", "") }}">
-        <td><a href="/semesters/{{ semester.id }}">{{ semester.name }}</a></td>
+        <td><a href="/semesters/{{ semester.id }}/hours">{{ semester.name }}</a></td>
         <td>{{ semester.hours }}</td>
         <td>{{ yn(semester.active) }}</td>
     </tr>

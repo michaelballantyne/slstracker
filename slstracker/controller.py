@@ -1,5 +1,5 @@
 from slstracker import app, model
-from flask import g, render_template, request, url_for, redirect, flash, jsonify, abort, config
+from flask import g, render_template, request, url_for, redirect, flash, jsonify, abort 
 
 @app.before_request
 def auth():
@@ -43,21 +43,28 @@ def show_semesters():
             semesters = semesters,
             hours = model.getTotalHours(g.user_id, None))
 
-@app.route('/semesters/<id>')
-def show_semester(id):
+@app.route('/semesters/<id>/hours')
+def show_hours(id):
     return render_template('hours.html', 
         student = model.getStudent(g.user_id),
         semester = model.getSemester(int(id)),
         entries = model.listHourEntries(g.user_id, int(id)),
-        hours = model.getTotalHours(g.user_id, int(id)),
+        hours = model.getTotalHours(g.user_id, int(id)))
+
+@app.route('/semesters/<id>/reflection')
+def show_reflection(id):
+    return render_template('reflection.html',
+        student = model.getStudent(g.user_id),
+        semester = model.getSemester(int(id)),
         reflection = model.getReflection(g.user_id, int(id)))
+
 
 @app.route('/semesters/<id>/reflection', methods=['POST'])
 def updateReflection(id):
     model.updateReflection(g.user_id, int(id), request.form['reflection'])
-    return redirect(url_for('show_semester', id=id) + "#reflection")
+    return redirect(url_for('show_reflection', id=id))
 
-@app.route('/semesters/<id>', methods=['POST'])
+@app.route('/semesters/<id>/hours', methods=['POST'])
 def add_hours(id):
     model.addHourEntry(g.user_id, int(id), request.form['date'], int(request.form['hours']), request.form['activity'], int(request.form['organization']))
     return redirect(url_for('show_semester', id=id) + '#enterhours')
@@ -75,12 +82,19 @@ def organizations_json():
 
 @app.route('/organizations/', methods=['POST'])
 def add_organization_json():
-    id = model.addOrganization(request.form['name'], request.form['contact_name'], request.form['contact_phone'])
-    return jsonify({'id': id})
+    if not model.findOrganization(request.form['name']):
+        id = model.addOrganization(request.form['name'], request.form['contact_name'], request.form['contact_phone'])
+        return jsonify({'id': id})
+    else:
+        return jsonify({'error': {'name': 'An organization of that name is already present in the system, and duplicates are not supported'}})
+
 
 @app.route('/admin/organizations/', methods=['POST'])
 def admin_add_organization():
-    model.addOrganization(request.form['name'], request.form['contact_name'], request.form['contact_phone'])
+    if not model.findOrganization(request.form['name']):
+        model.addOrganization(request.form['name'], request.form['contact_name'], request.form['contact_phone'])
+    else:
+        flash('An organization of that name is already present in the system, and duplicates are not supported')
     return redirect(url_for('admin_show_organizations'))
 
 @app.route('/admin/semesters/')
@@ -95,7 +109,10 @@ def admin_show_semesters():
 
 @app.route('/admin/semesters/', methods=['POST'])
 def admin_new_semester():
-    model.addSemester(request.form['name'])
+    if not model.findSemester(request.form['name']):
+        model.addSemester(request.form['name'])
+    else:
+        flash('A semester of that name is already present in the system, and duplicates are not supported')
     return redirect(url_for('admin_show_semesters'))
 
 @app.route('/admin/semesters/<id>', methods=['DELETE'])

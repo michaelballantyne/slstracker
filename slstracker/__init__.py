@@ -15,6 +15,7 @@ class App(Flask):
             raise
 
 app = App(__name__, instance_relative_config=True)
+app.secret_key='skdjfwqofvzxq.fcozxpmwdixvs'
 app.debug = True
 app.config.from_pyfile('application.cfg')
 print app.instance_path

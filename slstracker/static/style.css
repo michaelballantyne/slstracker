@@ -138,10 +138,6 @@ div.tab1 li.tab1, div.tab2 li.tab2, div.tab3 li.tab3 {
     border-bottom: 1px solid #596185; 
 }
 
-div.tab1 li.tab1 a, div.tab2 li.tab2 a, div.tab3 li.tab3 a {
-    background-color: #596185;
-    color: white;
-}
 
 ul#subtabs li a {
 
@@ -159,7 +155,12 @@ ul#tabnav li a, ul#subtabs li a {
     border-bottom: none;
 }
 
-ul#tabnav a:hover { background: #717585; }
+ul#tabnav a:hover, ul#subtabs a:hover { background: #717585; }
+
+div.tab1 li.tab1 a, div.tab2 li.tab2 a, div.tab3 li.tab3 a {
+    background-color: #596185 !important;
+    color: white !important;
+}
 
 #bread {
     color: #ccc;
