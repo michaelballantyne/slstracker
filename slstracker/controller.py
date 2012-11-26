@@ -1,67 +1,30 @@
 from slstracker import app, model
-from flask import render_template, request, url_for, redirect, session, flash, jsonify, make_response
-from functools import wraps
-
-@app.route('/login/')
-def show_login():
-    return render_template('login.html')
-
-@app.route('/login/', methods=['POST'])
-def login():
-    username = request.form['username']
-    fullname = request.form['name'] 
-
-    session['username'] = username
-    session['name'] = fullname 
-
-    if session['username'] == 'admin':
-        session['admin'] = True
-    else:
-        session['admin'] = False
-        user = model.findStudent(username)
-        if user is None:
-            model.addStudent(username, fullname)
-            user = model.findStudent(username)
-        session['userid'] = user.id
-
-    return redirect("/")
-
-def student_id():
-    return session['userid']
-
-@app.route('/logout/')
-def logout():
-    for attribute in ['username', 'name', 'admin']:
-        if attribute in session:
-            session.pop(attribute)
-
-    return redirect("/login/")
-
-def is_admin():
-    return session['admin']
+from flask import g, render_template, request, url_for, redirect, flash, jsonify, abort
 
 @app.before_request
-def logged_in():
-    if 'login' not in request.path:
-        if not 'username' in session:
-            return redirect(url_for('show_login'))
-        if 'admin' in request.path and not is_admin():
-            return make_response('you dont have access', 404)
+def auth():
+    try:
+        g.username = request.environ['REMOTE_USER']
+        g.fullname = request.environ['fullname']
+    except KeyError:
+        return abort(500)
 
+    g.admin = g.username == 'admin'
 
-def admin(view):
-    @wraps(view)
-    def new_view(*args,**kwargs):
-        if is_admin():
-            return view(*args,**kwargs)
-        else:
-            return "You are trying to access an admin page when logged in as a regular user"
-    
-    return logged_in(new_view)
+    if not g.admin:
+        user = model.findStudent(g.username)
+        if user is None:
+            model.addStudent(g.username, g.fullname)
+            user = model.findStudent(g.username)
+
+        g.user_id = user.id
+
+    if 'admin' in request.path and not g.admin:
+        return abort(403)
 
 @app.route('/')
 def index():
-    if is_admin():
+    if g.admin:
         return redirect(url_for('admin_show_semesters'))
     else:
         return show_semesters()
@@ -73,30 +36,30 @@ def show_semesters():
     semesters = [dict(row) for row in semesters]
 
     for semester in semesters:
-        semester["hours"] = model.getTotalHours(student_id(), semester['id'])
+        semester["hours"] = model.getTotalHours(g.user_id, semester['id'])
 
     return render_template('semesters.html', 
-            student = model.getStudent(student_id()), 
+            student = model.getStudent(g.user_id), 
             semesters = semesters,
-            hours = model.getTotalHours(student_id(), None))
+            hours = model.getTotalHours(g.user_id, None))
 
 @app.route('/semesters/<id>')
 def show_semester(id):
     return render_template('hours.html', 
-        student = model.getStudent(student_id()),
+        student = model.getStudent(g.user_id),
         semester = model.getSemester(int(id)),
-        entries = model.listHourEntries(student_id(), int(id)),
-        hours = model.getTotalHours(student_id(), int(id)),
-        reflection = model.getReflection(student_id(), int(id)))
+        entries = model.listHourEntries(g.user_id, int(id)),
+        hours = model.getTotalHours(g.user_id, int(id)),
+        reflection = model.getReflection(g.user_id, int(id)))
 
 @app.route('/semesters/<id>/reflection', methods=['POST'])
 def updateReflection(id):
-    model.updateReflection(student_id(), int(id), request.form['reflection'])
+    model.updateReflection(g.user_id, int(id), request.form['reflection'])
     return redirect(url_for('show_semester', id=id) + "#reflection")
 
 @app.route('/semesters/<id>', methods=['POST'])
 def add_hours(id):
-    model.addHourEntry(student_id(), int(id), request.form['date'], int(request.form['hours']), request.form['activity'], int(request.form['organization']))
+    model.addHourEntry(g.user_id, int(id), request.form['date'], int(request.form['hours']), request.form['activity'], int(request.form['organization']))
     return redirect(url_for('show_semester', id=id) + '#enterhours')
 
 @app.route('/semesters/<id>/hours/<hid>')
