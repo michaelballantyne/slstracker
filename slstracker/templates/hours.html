@@ -63,7 +63,7 @@
 <p>Total hours for semester: {{ hours }}<p>
 
 {% if semester.active %}
-<form id="enterhours" action="/semesters/{{ semester.id }}" method="POST">
+<form id="enterhours" action="/semesters/{{ semester.id }}/hours" method="POST">
     <fieldset>
         <legend>Enter Addtional Hours</legend>
         <label>Date: </label><input class="date" name="date" type="text" id="date" />
